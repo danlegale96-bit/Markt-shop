@@ -1,0 +1,31 @@
+
+:root{--accent:#0066ff;--accent2:#ff6a00;--muted:#666}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Segoe UI,Helvetica,Arial; margin:0; color:#111; background:#f7f8fa}
+.container{max-width:1100px;margin:24px auto;padding:0 16px}
+.site-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:white;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;object-fit:contain;border-radius:8px}
+.site-header h1{margin:0;font-size:18px}
+.btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;text-decoration:none;border:none;cursor:pointer}
+.btn-outline{background:transparent;border:1px solid #ddd;color:#333}
+.btn-small{padding:6px 8px;font-size:13px}
+.btn-danger{background:#d9534f}
+.filters{padding:16px;background:white;margin-top:16px;border-radius:8px;display:flex;gap:8px;align-items:center}
+.chip{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef3ff;color:#084; text-decoration:none}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
+.card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 6px 18px rgba(12,20,30,0.04)}
+.card img{width:100%;height:160px;object-fit:cover}
+.card-body{padding:12px}
+.card-body h3{margin:0 0 6px 0;font-size:16px}
+.muted{color:var(--muted);font-size:13px}
+.price{font-weight:700;margin-top:6px}
+.product-page .product-detail{display:flex;gap:20px;align-items:flex-start}
+.product-detail img{width:360px;height:360px;object-fit:cover;border-radius:12px}
+.site-footer{text-align:center;padding:24px;color:#888;margin-top:36px}
+.admin .form{background:white;padding:16px;border-radius:8px}
+.admin-table{width:100%;border-collapse:collapse}
+.admin-table th,.admin-table td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+.error{color:#b00020}
+.cart-table{width:100%;border-collapse:collapse}
+.cart-table th,.cart-table td{padding:10px;border-bottom:1px solid #eee}

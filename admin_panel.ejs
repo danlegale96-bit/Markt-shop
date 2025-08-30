@@ -1,0 +1,28 @@
+
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Panel — Markt-shop</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <main class="container admin">
+    <h2>Admin Panel</h2>
+    <p><a class="btn" href="/admin/add">Adaugă produs</a> <a class="btn btn-outline" href="/">Vezi magazin</a></p>
+    <table class="admin-table">
+      <tr><th>ID</th><th>Produs</th><th>Categorie</th><th>Preț (€)</th><th>Acțiuni</th></tr>
+      <% products.forEach(function(p){ %>
+        <tr>
+          <td><%= p.id %></td>
+          <td><%= p.name %></td>
+          <td><%= p.category %></td>
+          <td><%= (p.price_cents/100).toFixed(2) %></td>
+          <td>
+            <a class="btn btn-small" href="/admin/edit/<%= p.id %>">Editează</a>
+            <form style="display:inline" method="post" action="/admin/delete/<%= p.id %>" onsubmit="return confirm('Ștergi?')">
+              <button class="btn btn-small btn-danger" type="submit">Șterge</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </table>
+  </main>
+</body>
+</html>

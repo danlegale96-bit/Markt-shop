@@ -1,0 +1,72 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Coș — Markt-shop</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="/logo.png" class="logo" alt="Markt-shop">
+      <h1>Markt-shop</h1>
+    </div>
+    <nav>
+      <a href="/" class="btn">Catalog</a>
+      <a href="/admin" class="btn btn-outline">Admin</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Coșul tău</h2>
+    <div id="cart-area">Se încarcă coșul...</div>
+    <div id="actions" style="margin-top:20px; display:none">
+      <button id="checkout" class="btn">Plătește cu card (Stripe)</button>
+    </div>
+  </main>
+
+  <script>
+    async function loadCart(){
+      const area = document.getElementById('cart-area');
+      const cart = JSON.parse(localStorage.getItem('markt_cart')||'[]');
+      if (!cart || cart.length===0) {
+        area.innerHTML = '<p>Coș gol</p>';
+        return;
+      }
+      // fetch product details from server
+      let html = '<table class="cart-table"><tr><th>Produs</th><th>Qty</th><th>Preț</th></tr>';
+      let total = 0;
+      for (const it of cart) {
+        const resp = await fetch('/product-json/' + it.id);
+        const p = await resp.json();
+        const subtotal = (p.price_cents/100) * it.qty;
+        total += subtotal;
+        html += `<tr><td>${p.name}</td><td>${it.qty}</td><td>${subtotal.toFixed(2)} €</td></tr>`;
+      }
+      html += `<tr><td colspan="2"><strong>Total</strong></td><td><strong>${total.toFixed(2)} €</strong></td></tr></table>`;
+      area.innerHTML = html;
+      document.getElementById('actions').style.display = 'block';
+    }
+    loadCart();
+
+    document.getElementById('checkout').addEventListener('click', async ()=>{
+      const cart = JSON.parse(localStorage.getItem('markt_cart')||'[]');
+      if (!cart || cart.length===0) { alert('Coș gol'); return; }
+      try {
+        const resp = await fetch('/create-checkout-session', {
+          method:'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ items: cart })
+        });
+        const j = await resp.json();
+        if (j.url) window.location = j.url;
+        else alert('Eroare: ' + (j.error||'unknown'));
+      } catch(e) {
+        alert('Eroare: ' + e.message);
+      }
+    });
+  </script>
+</body>
+</html>
